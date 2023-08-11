@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const users = require('./users');
-// const movies = require('./movies');
+const movies = require('./movies');
 const auth = require('../middlewares/auth');
 const { login, createUser } = require('../controllers/users');
 const NotFoundError = require('../utils/errors/notFoundError');
@@ -12,7 +12,7 @@ router.post('/signup', validateRegister, createUser);
 router.use(auth);
 
 router.use('/', users);
-// router.use('/', movies);
+router.use('/', movies);
 router.use('*', () => {
   console.log('any adsress');
   throw new NotFoundError('Запрашиваемый ресурс не найден');
