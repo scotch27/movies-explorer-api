@@ -13,9 +13,9 @@ module.exports = async (req, res, next) => {
     const token = authorization.replace('Bearer ', '');
     payload = jwt.verify(token, JWT_SECRET);
 
-    // Проверка, если удалили пользователя, а токен валидный
+    // Проверка, если в БД удалили пользователя, а токен валидный
     if(!await isUser(payload._id)){
-      throw new UnauthorizedError('Необходима авторизация!');
+      throw new UnauthorizedError('Необходима авторизация');
     }
   } catch (error) {
     return next(new UnauthorizedError('Необходима авторизация'));
