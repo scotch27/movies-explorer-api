@@ -70,3 +70,10 @@ module.exports.login = (req, res, next) => {
       return res.send({ token });
     }).catch((error) => next(error));
 };
+
+module.exports.isUser = (userId) => {
+  return User.findOne({ _id: userId })
+    .orFail(false)
+    .then(true)
+    .catch(false);
+}
