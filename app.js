@@ -15,9 +15,9 @@ app.use(cors);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(helmet());      // Helmet помогает защитить Express-приложения посредством установки HTTP-заголовков, связанных с безопасностью
+app.use(helmet()); // установка HTTP-заголовков, связанных с безопасностью
 app.use(requestLogger); // подключаем логгер запросов
-app.use(limiter);       // ограничение трафика
+app.use(limiter); // ограничение трафика
 
 // подключаемся к серверу mongo
 mongoose.connect(DB_URL);

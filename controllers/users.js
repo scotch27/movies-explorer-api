@@ -71,9 +71,7 @@ module.exports.login = (req, res, next) => {
     }).catch((error) => next(error));
 };
 
-module.exports.isUser = (userId) => {
-  return User.findOne({ _id: userId })
-    .orFail(false)
-    .then(true)
-    .catch(false);
-}
+module.exports.isUser = (userId) => User.findOne({ _id: userId })
+  .orFail(false)
+  .then(true)
+  .catch(false);

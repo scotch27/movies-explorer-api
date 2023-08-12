@@ -10,8 +10,7 @@ const {
 // возвращает все сохранённые текущим пользователем фильмы
 router.get('/movies', getMovies);
 
-// создаёт фильм с переданными в теле
-// country, director, duration, year, description, image, trailer, nameRU, nameEN и thumbnail, movieId 
+// создаёт фильм с переданными в теле атрибуты фильма
 router.post('/movies', validateMovie, createMovie);
 
 // удаляет сохранённый фильм по id

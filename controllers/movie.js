@@ -32,16 +32,40 @@ module.exports.deleteMovie = (req, res, next) => {
 };
 
 module.exports.createMovie = (req, res, next) => {
-  const { country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId } = req.body;
+  const {
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    nameRU,
+    nameEN,
+    thumbnail,
+    movieId,
+  } = req.body;
   const ownerId = req.user._id;
-  Movie.findOne({ owner: ownerId, movieId: movieId })
+  Movie.findOne({ owner: ownerId, movieId })
     .then((movie) => {
       if (movie) {
         res.status(200).send(movie);
-      }
-      else {
-        Movie.create({ country, director, duration, year, description, image, trailerLink, nameRU, nameEN, thumbnail, movieId, owner: ownerId })
-          .then((movie) => res.status(201).send(movie))
+      } else {
+        Movie.create({
+          country,
+          director,
+          duration,
+          year,
+          description,
+          image,
+          trailerLink,
+          nameRU,
+          nameEN,
+          thumbnail,
+          movieId,
+          owner: ownerId,
+        })
+          .then((mov) => res.status(201).send(mov))
           .catch((error) => {
             console.log(error);
             if (error.name === 'CastError') {
