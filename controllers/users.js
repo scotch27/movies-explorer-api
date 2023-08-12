@@ -4,7 +4,12 @@ const User = require('../models/user');
 const BadRequestError = require('../utils/errors/badRequestError');
 const NotFoundError = require('../utils/errors/notFoundError');
 const ConflictError = require('../utils/errors/conflictError');
-const { JWT_SECRET } = require('../utils/constants');
+const {
+  JWT_SECRET,
+  ERR_USER_ID_NOT_FOUND,
+  ERR_USER_INCORRECT_DATA,
+  ERR_USER_EMAIL_REGISTERED,
+} = require('../utils/constants');
 
 module.exports.getMe = (req, res, next) => {
   User.findOne({ _id: req.user._id })
@@ -23,12 +28,12 @@ module.exports.updateMe = (req, res, next) => {
     },
   )
     .orFail(() => {
-      throw new NotFoundError('Пользователь по указанному _id не найден');
+      throw new NotFoundError(ERR_USER_ID_NOT_FOUND);
     })
     .then((user) => res.send(user))
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        return next(new BadRequestError(ERR_USER_INCORRECT_DATA));
       }
       return next(error);
     });
@@ -53,10 +58,10 @@ module.exports.createUser = (req, res, next) => {
     }))
     .catch((error) => {
       if (error.name === 'ValidationError') {
-        return next(new BadRequestError('Переданы некорректные данные при создании пользователя'));
+        return next(new BadRequestError(ERR_USER_INCORRECT_DATA));
       }
       if (error.code === 11000) {
-        return next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
+        return next(new ConflictError(ERR_USER_EMAIL_REGISTERED));
       }
       return next(error);
     });

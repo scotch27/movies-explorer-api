@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { URL_REGEXP } = require('../utils/constants');
+const { URL_REGEXP, ERR_FORMAT_LINK } = require('../utils/constants');
 
 const movieSchema = new mongoose.Schema(
   {
@@ -32,7 +32,7 @@ const movieSchema = new mongoose.Schema(
           const str = v;
           return regex.test(str);
         },
-        message: 'Укажите ссылку на постер к фильму',
+        message: ERR_FORMAT_LINK('image'),
       },
     },
     trailerLink: {
@@ -44,7 +44,7 @@ const movieSchema = new mongoose.Schema(
           const str = v;
           return regex.test(str);
         },
-        message: 'Укажите ссылку на трейлер фильма',
+        message: ERR_FORMAT_LINK('trailerLink'),
       },
     },
     thumbnail: {
@@ -56,7 +56,7 @@ const movieSchema = new mongoose.Schema(
           const str = v;
           return regex.test(str);
         },
-        message: 'Укажите ссылку на миниатюрное изображение постера к фильму',
+        message: ERR_FORMAT_LINK('thumbnail'),
       },
     },
     owner: {
